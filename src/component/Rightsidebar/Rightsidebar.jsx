@@ -1,35 +1,32 @@
 import React from "react";
-import './Rightsidebar.css'
+import "./Rightsidebar.css";
+import assets from "../../assets/assets";
 
-const Rightsidebar = ()=> {
-    return (
- <div className="rs">
-    <div className="rs-profile">
-        <img src={assest.profile_img} alt='' />
-        <h3>Richard Sanford <img src={assest.green_dot} className="dot" alt=''  /></h3>
+const Rightsidebar = () => {
+  return (
+    <div className="rs">
+      <div className="rs-profile">
+        <img src={assets.profile_img} alt="" />
+        <h3>
+          Richard Sanford <img src={assets.green_dot} className="dot" alt="" />
+        </h3>
         <p> Hey, There I am Sanford using Chat app</p>
-    </div>
-    <hr/>
-    <div className="rs-media">
+      </div>
+      <hr />
+      <div className="rs-media">
         <p>Media</p>
         <div>
-            <img src={assest.pic1} alt="" />
-            <img src={assest.pic2} alt="" />
-            <img src={assest.pic3} alt="" />
-            <img src={assest.pic4} alt="" />
-            <img src={assest.pic2} alt="" />
-            <img src={assest.pic3} alt="" />
-            <img src={assest.pic1} alt="" />
-
+          <img src={assets.pic1} alt="" />
+          <img src={assets.pic2} alt="" />
+          <img src={assets.pic3} alt="" />
+          <img src={assets.pic4} alt="" />
+          <img src={assets.pic1} alt="" />
+          <img src={assets.pic2} alt="" />
         </div>
+      </div>
+      <button>Logout</button>
     </div>
-    <button>Logout</button>
- </div>
+  );
+};
 
-
-
-
-    )
-}
-
-export default Rightsidebar
+export default Rightsidebar;
