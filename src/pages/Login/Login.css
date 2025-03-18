@@ -41,7 +41,7 @@
 .login-form button:hover{
     background: #0056b3;
 }
-login-term{
+.login-term{
     font-size: 12px;
     display: flex;
     gap: 5px;
@@ -63,5 +63,5 @@ login-term{
 .login-toggle span{
     font-weight: 500;
     color: #007eff;
-    pointer: cursor;
+    cursor: pointer;
 }
