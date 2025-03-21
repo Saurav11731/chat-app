@@ -1,22 +1,36 @@
 import React, { useState } from "react"; // eslint-disable-line
 import "./Login.css";
 import assets from "../../assets/assets";
+import { signup, login } from "../../config/firebase";
 const Login = () => {
   const [currState, setCurrState] = useState("Sign up");
   const [userName, setUserName] = useState("");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+
+  const onSubmitHandler = async (e) => {
+    e.preventDefault();
+    if (currState === "Sign up") {
+       signup(userName, email, password);
+    } else {
+       login(email, password);
+    }
+  };
 
   return (
     <div className="login">
       <img src={assets.logo_big} alt="" className="logo" />
-      <form className="login-form">
+      <form className="login-form" onSubmit={onSubmitHandler}>
         <h2>{currState}</h2>
 
         {currState === "Sign up" ? (
-          <input
+          <input 
             type="text"
             placeholder="Username"
             className="form-input"
             required
+            value={userName}
+            onChange={(e) => setUserName(e.target.value)}
           />
         ) : null}
         <input
@@ -24,8 +38,12 @@ const Login = () => {
           placeholder="Email-Address"
           className="form-input"
           required
+          value={email}
+          onChange={(e) => setEmail(e.target.value)}
         />
         <input
+          onChange={(e) => setPassword(e.target.value)}
+          value={password}
           type="password"
           placeholder="password"
           className="form-input"
@@ -40,8 +58,8 @@ const Login = () => {
         </div>
         <div className="login-forgot">
           <p className="login-toggle">
-            Already have an account{" "}
-            <span onClick={() => setCurrState("Login")}>Click here</span>
+            {currState === "Sign up" ? "Already have an account?" : "Don't have an account?"}
+            <span onClick={() => setCurrState(currState === "Sign up" ? "Login" : "Sign up")}>Click here</span>
           </p>
         </div>
       </form>
