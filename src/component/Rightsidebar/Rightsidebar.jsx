@@ -8,7 +8,7 @@ const Rightsidebar = () => {
       <div className="rs-profile">
         <img src={assets.profile_img} alt="" />
         <h3>
-          Richard Sanford <img src={assets.green_dot} className="dot" alt="" />
+          Anukool <img src={assets.green_dot} className="dot" alt="" />
         </h3>
         <p> Hey, There I am Sanford using Chat app</p>
       </div>
