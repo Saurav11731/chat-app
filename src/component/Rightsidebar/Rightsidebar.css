@@ -72,3 +72,8 @@
     cursor: pointer;
     border-radius: 20px;
 }
+button:hover{
+    background: #4e9ef3;
+    font-weight: 700;
+    
+}

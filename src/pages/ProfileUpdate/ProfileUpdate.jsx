@@ -21,38 +21,34 @@ const ProfileUpdate = () => {
     console.log("Submitting profile update...", { name, bio, image });
 
     try {
-      if (!prevImage && !image) {
-        toast.error("Please upload a profile picture.");
-        return;
-      }
-
       const docRef = doc(db, "users", uid);
 
-      // If image is updated, upload and then update DB
       if (image) {
         const imgUrl = await Upload(image);
-
         if (!imgUrl) {
           toast.error("Image upload failed.");
           return;
         }
-
-        setPrevImage(imgUrl);
 
         await updateDoc(docRef, {
           avatar: imgUrl,
           name,
           bio,
         });
+
+        setPrevImage(imgUrl);
         toast.success("Profile updated with new image.");
       } else {
-        // If image is not changed, just update name and bio
+        // Just update name and bio, no image validation
         await updateDoc(docRef, {
           name,
           bio,
         });
+
         toast.success("Profile updated successfully.");
       }
+
+      navigate("/chat");
     } catch (error) {
       console.error("Error updating profile:", error);
       toast.error("Failed to update profile. Check console for details.");
@@ -85,7 +81,7 @@ const ProfileUpdate = () => {
       }
     });
 
-    return () => unsubscribe(); // Clean up the listener
+    return () => unsubscribe(); // Clean up
   }, [navigate]);
 
   return (
