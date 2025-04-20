@@ -20,7 +20,8 @@ import { toast } from "react-toastify";
 
 const Leftsidebar = () => {
   const navigate = useNavigate();
-  const { userData, chatData, setChatUser, setMessagesId } = useContext(AppContext);
+  const { userData, chatData, setChatUser, setMessagesId } =
+    useContext(AppContext);
   const [searchResult, setSearchResult] = useState(null);
   const [showSearch, setShowSearch] = useState(false);
 
@@ -43,7 +44,9 @@ const Leftsidebar = () => {
         const foundUser = querySnap.docs[0].data();
         if (foundUser.id === userData?.id) return;
 
-        const isAlreadyChatted = chatData?.some((chat) => chat.rId === foundUser.id);
+        const isAlreadyChatted = chatData?.some(
+          (chat) => chat.rId === foundUser.id
+        );
         if (!isAlreadyChatted) {
           setSearchResult(foundUser);
         } else {
@@ -116,30 +119,45 @@ const Leftsidebar = () => {
     }
   };
 
-  const setChat = async (chatItem) => {
-    setChatUser(chatItem);
-    setMessagesId(chatItem.messageId);
-
+  const setChat = async (Item) => {
     try {
-      const myChatRef = doc(db, "chats", userData.id);
-      const mySnap = await getDoc(myChatRef);
-
-      if (mySnap.exists()) {
-        const currentChats = mySnap.data().chatsData || [];
-        const updatedChats = currentChats.map((chat) =>
-          chat.messageId === chatItem.messageId
-            ? { ...chat, messageSeen: true }
-            : chat
-        );
-
-        await updateDoc(myChatRef, { chatsData: updatedChats });
-      }
+      setChatUser(Item);
+      setMessagesId(Item.messageId);
+      const userChatRef = doc(db, "chats", userData.id);
+      const userChatsSnapshot = await getDoc(userChatRef);
+      const userChatsData = userChatsSnapshot.data();
+      const chatIndex = userChatsData.chatsData.findIndex(
+        (c) => c.messageId === Item.messageId
+      );
+      userChatsData.chatsData[chatIndex].messageSeen = true;
+      await updateDoc(userChatRef, {
+        chatsData: userChatsData.chatsData,
+      });
     } catch (error) {
-      console.error("Error updating seen status:", error);
+      toast.error("Failed to add chat");
+      console.error("Error adding chat:", error);
     }
-
-    navigate("/chat");
   };
+  //   try {
+  //     const myChatRef = doc(db, "chats", userData.id);
+  //     const mySnap = await getDoc(myChatRef);
+
+  //     if (mySnap.exists()) {
+  //       const currentChats = mySnap.data().chatsData || [];
+  //       const updatedChats = currentChats.map((chat) =>
+  //         chat.messageId === chatItem.messageId
+  //           ? { ...chat, messageSeen: true }
+  //           : chat
+  //       );
+
+  //       await updateDoc(myChatRef, { chatsData: updatedChats });
+  //     }
+  //   } catch (error) {
+  //     console.error("Error updating seen status:", error);
+  //   }
+
+  //   navigate("/chat");
+  // };
 
   const handleLogout = () => {
     // TODO: Add actual logout logic if needed
@@ -163,7 +181,11 @@ const Leftsidebar = () => {
 
         <div className="ls-search">
           <img src={assets.search_icon} alt="search" />
-          <input onChange={inputHandler} type="text" placeholder="Search here.." />
+          <input
+            onChange={inputHandler}
+            type="text"
+            placeholder="Search here.."
+          />
         </div>
       </div>
 
@@ -176,8 +198,17 @@ const Leftsidebar = () => {
         ) : (
           Array.isArray(chatData) &&
           chatData.map((item, index) => (
-            <div onClick={() => setChat(item)} key={index} className="friends">
-              <img src={item.userData?.avatar || assets.default_avatar} alt="chat-avatar" />
+            <div
+              onClick={() => setChat(item)}
+              key={index}
+              className={`friends ${
+                item.messageSeen || item.messageId ? "" : "border"
+              }`}
+            >
+              <img
+                src={item.userData?.avatar || assets.default_avatar}
+                alt="chat-avatar"
+              />
               <div>
                 <p>{item.userData?.name || "Unknown User"}</p>
                 <span>{item.lastMessage}</span>

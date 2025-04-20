@@ -10,6 +10,7 @@ import Upload from "../../lib/upload";
 
 const ProfileUpdate = () => {
   const [image, setImage] = useState(null);
+
   const [name, setName] = useState("");
   const [bio, setBio] = useState("");
   const [uid, setUid] = useState("");

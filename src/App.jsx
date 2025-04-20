@@ -12,7 +12,7 @@ import { AppContext } from "./context/AppContext";
 const App = () => {
   const navigate = useNavigate();
   const { loadUserData } = useContext(AppContext);
-  
+
   useEffect(() => {
     onAuthStateChanged(auth, async (user) => {
       if (user) {
@@ -23,7 +23,6 @@ const App = () => {
       }
     });
   }, []);
-  
 
   return (
     <>
@@ -34,9 +33,7 @@ const App = () => {
         <Route path="/chat" element={<Chat />} />
         <Route path="/ProfileUpdate" element={<ProfileUpdate />} />
       </Routes>
-      
     </>
-    
   );
 };
 
