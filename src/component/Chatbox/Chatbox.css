@@ -106,3 +106,19 @@ width: 22px;
     margin-bottom: 30px;
     border-radius: 10px;
 }
+.chat-welcome{
+    width: 100%;
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    justify-content: center;
+    gap: 5px;
+}
+.chat-welcome img{
+    width: 60px;
+}
+.chat-welcome p{
+    font-size: 20px;
+    font-weight: 500;
+    color: #383838;
+}

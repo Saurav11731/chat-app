@@ -1,4 +1,4 @@
-import React, { useContext, useEffect } from "react"; // eslint-disable-line
+import React, { useContext, useEffect, useState } from "react"; // eslint-disable-line
 import { Routes, Route, Navigate, useNavigate } from "react-router-dom";
 import ProfileUpdate from "./pages/ProfileUpdate/ProfileUpdate";
 import Login from "./pages/Login/Login";
@@ -12,7 +12,7 @@ import { AppContext } from "./context/AppContext";
 const App = () => {
   const navigate = useNavigate();
   const { loadUserData } = useContext(AppContext);
-
+  
   useEffect(() => {
     onAuthStateChanged(auth, async (user) => {
       if (user) {
@@ -23,6 +23,7 @@ const App = () => {
       }
     });
   }, []);
+  
 
   return (
     <>
@@ -33,7 +34,9 @@ const App = () => {
         <Route path="/chat" element={<Chat />} />
         <Route path="/ProfileUpdate" element={<ProfileUpdate />} />
       </Routes>
+      
     </>
+    
   );
 };
 

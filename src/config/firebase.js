@@ -121,4 +121,4 @@ export const logout = async () => {
 };
 
 // Export Firebase instances
-export { auth, db };
+export { auth, db,app};
